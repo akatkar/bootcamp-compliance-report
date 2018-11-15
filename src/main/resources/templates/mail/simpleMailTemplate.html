@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Simple Mail Template</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <!-- use the font -->
+    <style>
+        body {
+            color: #000;
+            font-family: 'Roboto', sans-serif;
+            font-size: 32px;
+        }
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0;">
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+
+    <tr>
+        <td bgcolor="#eaeaea" style="padding: 10px 10px 10px 10px;">
+            <p th:text="'Hello ' + ${value.get(headers.get(0))} + ','">Hello Ali, </p>
+            <p> Thank you for signing up. You submitted the following data:</p>
+
+            <p th:text="'First Name: '   + ${value.get(headers.get(0))}">Ali</p>
+            <p th:text="'Last Name: '    + ${value.get(headers.get(1))}">Katkar</p>
+            <p th:text="'Email Adress: ' + ${value.get(headers.get(2))}">test@test.com</p>
+            <p th:text="'Department: '   + ${value.get(headers.get(3))}">import</p>
+
+            <p>Please verify the information and contact us if there's any mistake.</p>
+
+            <p>Thank you!</p>
+        </td>
+    </tr>
+
+</table>
+
+</body>
+</html>

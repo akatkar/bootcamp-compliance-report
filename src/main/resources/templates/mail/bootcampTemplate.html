@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Bootcamp Email Report Template</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <!-- use the font -->
+    <style>
+        body {
+            color: #000;
+            font-family: 'Roboto', sans-serif;
+            font-size: 32px;
+        }
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0;">
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+
+    <tr>
+        <td align="center" bgcolor="#78ab46" style="padding: 10px 10px 10px 10px;">
+            <h1>Bootcamp Report</h1>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#eaeaea" style="padding: 10px 10px 10px 10px;">
+            <p>Hello Bootcampers, </p>
+            <p>Please find below the compliance report for <b th:text="${values.get(0).get(headers.get(3))}" !!!>11.11.2018</b></p>
+            <p>The report is based on 5 main compliance criteria for the Bootcamp:</p>
+
+            <ul>
+                <li><b>1.Attendance:</b> each IC should work a minimum of 7 hrs every weekday</li>
+                <li><b>2.Deep work blocks:</b> each IC should not stop tracker more than 3 times every weekday</li>
+                <li><b>3.WsPro Compliance:</b> each IC should have 90% focus and 90% intensity every weekday</li>
+                <li><b>4.Time Allocation:</b> each IC should work more than 70% of their time in development every weekday</li>
+                <li><b>5.Worker initiated CiC:</b> each IC should fill check-in chat with below information every weekday</li>
+                <ul>
+                    <li>What have you worked on yesterday?</li>
+                    <li>What are you planning to work on today?</li>
+                    <li>Do you have any blockers?</li>
+                    <li>Mark your STATUS as listed in the application</li>
+                </ul>
+            </ul>
+
+            <p>Best Regards,</p>
+            <p th:text="${values.get(0).get(headers.get(2))}">John</p>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#eaeaea" style="padding: 10px 10px 10px 10px;">
+            <table align="center" border="2" cellpadding="5" cellspacing="0" width="900" style="border-collapse: collapse;">
+                <tr bgcolor="#a9a9a9">
+                    <th th:text="${headers.get(1)}">IC Name</th>
+                    <th th:text="${headers.get(4)}">7 Hrs per day</th>
+                    <th th:text="${headers.get(5)}">Deep Work Blocks</th>
+                    <th th:text="${headers.get(6)}">Dev Time >70%</th>
+                    <th th:text="${headers.get(7)}">Daily CiC</th>
+                    <th th:text="${headers.get(8)}">Intensity - Focus 90%</th>
+                </tr>
+                <tr align="center" th:each="ic : ${values}">
+
+                    <td th:text="${ic.get(headers.get(1))}" bgcolor="#a9a9a9">Ali Katkar</td>
+                    <td th:text="${ic.get(headers.get(4))}" th:bgcolor="${ic.get(headers.get(4)) eq 'Yes'} ? 'green' : 'red'">Yes</td>
+                    <td th:text="${ic.get(headers.get(5))}" th:bgcolor="${ic.get(headers.get(5)) eq 'Yes'} ? 'green' : 'red'">No</td>
+                    <td th:text="${ic.get(headers.get(6))}" th:bgcolor="${ic.get(headers.get(6)) eq 'Yes'} ? 'green' : 'red'">No</td>
+                    <td th:text="${ic.get(headers.get(7))}" th:bgcolor="${ic.get(headers.get(7)) eq 'Yes'} ? 'green' : 'red'">Yes</td>
+                    <td th:text="${ic.get(headers.get(8))}" th:bgcolor="${ic.get(headers.get(8)) eq 'Yes'} ? 'green' : 'red'">No</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

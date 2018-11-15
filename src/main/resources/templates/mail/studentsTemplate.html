@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Students Template</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'/>
+
+    <!-- use the font -->
+    <style>
+        body {
+            color: #000;
+            font-family: 'Roboto', sans-serif;
+            font-size: 32px;
+        }
+    </style>
+</head>
+
+<body style="margin: 0; padding: 0;">
+
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="600" style="border-collapse: collapse;">
+
+    <tr>
+        <td bgcolor="#eaeaea" style="padding: 10px 10px 10px 10px;">
+            <p>Hello Students, </p>
+            <p>Activity applications completed like below. If you want to change your activity you may apply end of this week</p>
+        </td>
+    </tr>
+    <tr>
+        <td bgcolor="#eaeaea" style="padding: 10px 10px 10px 10px;">
+            <table align="center" border="2" cellpadding="5" cellspacing="0" width="900" style="border-collapse: collapse;">
+                <tr bgcolor="#a9a9a9">
+                    <th th:text="${headers.get(0)}">IC Name</th>
+                    <th th:text="${headers.get(1)}">7 Hrs per day</th>
+                    <th th:text="${headers.get(2)}">Deep Work Blocks</th>
+                    <th th:text="${headers.get(3)}">Dev Time >70%</th>
+                    <th th:text="${headers.get(4)}">Daily CiC</th>
+                    <th th:text="${headers.get(5)}">Intensity - Focus 90%</th>
+                </tr>
+                <tr align="center" th:each="ic : ${values}">
+
+                    <td th:text="${ic.get(headers.get(0))}">Alexandra</td>
+                    <td th:text="${ic.get(headers.get(1))}">Female</td>
+                    <td th:text="${ic.get(headers.get(2))}">4.Senior</td>
+                    <td th:text="${ic.get(headers.get(3))}">CA</td>
+                    <td th:text="${ic.get(headers.get(4))}">English</td>
+                    <td th:text="${ic.get(headers.get(5))}">Drama Club</td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

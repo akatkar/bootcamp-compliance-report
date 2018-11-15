@@ -1,0 +1,44 @@
+package com.crossover.bootcamp.wk4.report.model;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+public class SheetData {
+
+    private List<String> headers;
+
+    private List<Map<String,String>> values;
+
+    private Map<String, String> toMap(List<Object> values) {
+
+        Map<String, String> results = new HashMap<>();
+        for (int i = 0; i < values.size() ; i++) {
+            results.put(headers.get(i), values.get(i).toString());
+        }
+        return results;
+    }
+
+    public SheetData(List<List<Object>> data ){
+
+        headers = data.stream()
+                .limit(1)
+                .flatMap(List::stream)
+                .map(Object::toString)
+                .collect(Collectors.toList());
+
+        values = data.stream()
+                .skip(1)
+                .map(this::toMap)
+                .collect(Collectors.toList());
+    }
+
+    public List<String> getHeaders() {
+        return headers;
+    }
+
+    public List<Map<String, String>> getValues() {
+        return values;
+    }
+}
