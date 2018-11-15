@@ -28,7 +28,11 @@ sheet must have an email column and template must be using value object.
  - mail.message.attachments=file1,file2
  - mail.message.individually = false
  
- > NOTE THAT: attachment files should be full of path.You can attach multiple files as comma seperated
+ NOTE THAT: 
+ - Attachment files must be provided as full of path
+ - If an attached file does not exist, it is ignored silently
+ - You can attach multiple files as comma separated
+ - Workbook1.xlsx is put to repository only for attachment test
 
 ## Templates
 Thymeleaf has been used as template engine. Templates can be prepared as html file using thymeleaf syntax
