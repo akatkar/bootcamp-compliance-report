@@ -49,8 +49,7 @@ class MailSenderImpl implements MailSender{
 
         data.getValues()
                 .forEach(value-> {
-                    String[] to = new String[] {value.get(emailHeader)};
-                    sendMail(to, data.getHeaders(), value);
+                    sendMail(value.get(emailHeader), data.getHeaders(), value);
                 });
     }
 
@@ -72,9 +71,13 @@ class MailSenderImpl implements MailSender{
             messageHelper.setText(content, true);
         };
         mailSender.send(messagePreparator);
+        LOGGER.info("{} sent with subject {} to {}",
+                mailMessageConfig.getTemplate(),
+                mailMessageConfig.getSubject(),
+                mailMessageConfig.getTo());
     }
 
-    private void sendMail(String[] toEmail, List<String> headers, Map<String, String> value){
+    private void sendMail(String toEmail, List<String> headers, Map<String, String> value){
 
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage,
@@ -92,6 +95,10 @@ class MailSenderImpl implements MailSender{
             messageHelper.setText(content, true);
         };
         mailSender.send(messagePreparator);
+        LOGGER.info("{} sent with subject {} to {}",
+                mailMessageConfig.getTemplate(),
+                mailMessageConfig.getSubject(),
+                toEmail);
     }
 
     private void addAttachments(MimeMessageHelper messageHelper, List<String> files) {
