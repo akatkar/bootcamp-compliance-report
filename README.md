@@ -48,6 +48,17 @@ Template files must be placed in <b>resources/templates/mail</b> folder
 
 > simpleMailTemplate:  --spring.profiles.active=simplemail
 
+### Using custom templates
+To be able to use custom template, you should run the app like following
+
+    java -jar target/compliance-report-0.0.1-SNAPSHOT.jar --spring.profiles.active=students  --template.folder=file:/Users/alikatkar/upload/template/ --mail.message.template=customTemplate
+
+where this command
+ - Modified version of students template are used as custom template 
+ - Custom template full path is <b>/Users/alikatkar/upload/template/customTemplate.html</b>
+ - Please noticed that folder must be ended by /
+ - Do not use suffix .html in mail.message.template (It is already configured)        
+
 
 ## Usage of the Tool with Maven
 
