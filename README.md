@@ -20,7 +20,7 @@ sheet must have an email column and template must be using value object.
  - sheet.range = Index
 
 ## mail configuration
- - mail.message.from=${mail.username}
+ - mail.message.from=${spring.mail.username}
  - mail.message.to=xxx@test.com, yyy@test.com
  - mail.message.cc=xxx@test.com, yyy@test.com
  - mail.message.subject=Bootcamp Compliance Report
