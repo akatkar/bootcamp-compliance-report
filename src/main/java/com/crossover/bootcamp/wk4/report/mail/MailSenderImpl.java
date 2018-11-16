@@ -45,9 +45,11 @@ class MailSenderImpl implements MailSender{
         String emailHeader = data.getHeaders().stream()
                 .filter(s -> s.toLowerCase().contains("email"))
                 .findFirst()
-                .orElseGet(() -> {throw new RuntimeException();});
+                .orElseGet(() -> {throw new EmailNotFoundException();});
 
         data.getValues()
+                .stream()
+                .parallel()
                 .forEach(value-> {
                     sendMail(value.get(emailHeader), data.getHeaders(), value);
                 });
