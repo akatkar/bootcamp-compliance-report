@@ -77,6 +77,22 @@ All config variables can be provided as command line arguments
 
 > java -jar target/compliance-report-0.0.1-SNAPSHOT.jar --mail.message.to=alikatkar@hotmail.com
  
+## Setting time to send
+Scheduling has been done quartz cron scheduler. So if you provide a valid cron expression 
+email reports will be sent periodically according to cron expression. If cron expression is provided but invalid, application will stop without sending report.
+If cron expression is not provided then report will be sent immediately and application will stop.
+
+### example usage of time to send
+    // cron expression is not provided, send once
+    java -jar target/compliance-report-0.0.1-SNAPSHOT.jar --schedule.cron
+
+    // send on every 2 minutes
+    java -jar target/compliance-report-0.0.1-SNAPSHOT.jar --schedule.cron='0 0/2 * * * ?'
+
+    // Send At 23:00 on every day-of-week from Monday through Friday
+    java -jar target/compliance-report-0.0.1-SNAPSHOT.jar --schedule.cron='0 0 23 ? * MON,FRI'
+
+> for more information about cron: http://www.quartz-scheduler.org/documentation/quartz-2.2.x/tutorials/tutorial-lesson-06.html
 
 ## Google API Authorization
 The first time you run the sample, it will prompt you to authorize access:
