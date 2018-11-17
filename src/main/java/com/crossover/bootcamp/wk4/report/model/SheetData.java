@@ -11,15 +11,6 @@ public class SheetData {
 
     private List<Map<String,String>> values;
 
-    private Map<String, String> toMap(List<Object> values) {
-
-        Map<String, String> results = new HashMap<>();
-        for (int i = 0; i < values.size() ; i++) {
-            results.put(headers.get(i), values.get(i).toString());
-        }
-        return results;
-    }
-
     public SheetData(List<List<Object>> data ){
 
         headers = data.stream()
@@ -32,6 +23,15 @@ public class SheetData {
                 .skip(1)
                 .map(this::toMap)
                 .collect(Collectors.toList());
+    }
+
+    private Map<String, String> toMap(List<Object> values) {
+
+        Map<String, String> results = new HashMap<>();
+        for (int i = 0; i < values.size() ; i++) {
+            results.put(headers.get(i), values.get(i).toString());
+        }
+        return results;
     }
 
     public List<String> getHeaders() {
