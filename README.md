@@ -41,10 +41,12 @@ Example sheets
  - Workbook1.xlsx is put to repository only for attachment test
 
 ## Templates
-Thymeleaf has been used as template engine. Templates can be prepared as html file using thymeleaf syntax
-Template files must be placed in <b>resources/templates/mail</b> folder
+Thymeleaf has been used as template engine. Templates should be prepared as html file using thymeleaf syntax.
+Three sample templates have already been prepared. One of them, which is simplemailTemplate, is demonstration of individually email reports.
+Template files can be found in <b>resources/templates/mail</b> folder.
 
-3 sample templates have already been prepared. One of them, which is simplemailTemplate, is using individually email reports.
+Custom prepared templates also can be used as defining with <b>template.folder</b> and <b>mail.message.template</b> parameters without building project.
+
 
 ### Using sample templates
 
@@ -55,7 +57,7 @@ Template files must be placed in <b>resources/templates/mail</b> folder
 > simpleMailTemplate:  --spring.profiles.active=simplemail
 
 ### Using custom templates
-To be able to use custom template, you should run the app like following
+To be able to use custom template, you should run the project like following
 
     java -jar target/compliance-report-0.0.1-SNAPSHOT.jar --spring.profiles.active=students  --template.folder=file:/Users/alikatkar/upload/template/ --mail.message.template=customTemplate
 
@@ -68,20 +70,20 @@ where this command
 
 ## Usage of the Tool with Maven
 
-> mvn spring-boot:run
+    mvn spring-boot:run
 
-> mvn spring-boot:run -Dspring.profiles.active=students
+    mvn spring-boot:run -Dspring.profiles.active=students
 
-> mvn spring-boot:run -Dmail.message.to=alikatkar@hotmail.com
+    mvn spring-boot:run -Dmail.message.to=alikatkar@hotmail.com
 
 ## Usage of the Tool with Jar File
 You should kick off the jar from root for security tokens. 
 
-> java -jar target/compliance-report-0.0.1-SNAPSHOT.jar
+    java -jar target/compliance-report-0.0.1-SNAPSHOT.jar
 
-All config variables can be provided as command line arguments
+All config variables can be provided as command line arguments.
 
-> java -jar target/compliance-report-0.0.1-SNAPSHOT.jar --mail.message.to=alikatkar@hotmail.com
+    java -jar target/compliance-report-0.0.1-SNAPSHOT.jar --mail.message.to=alikatkar@hotmail.com
  
 ## Setting time to send
 Scheduling has been done quartz cron scheduler. So if you provide a valid cron expression 
