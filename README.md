@@ -84,7 +84,25 @@ You should kick off the jar from root for security tokens.
 All config variables can be provided as command line arguments.
 
     java -jar target/compliance-report-0.0.1-SNAPSHOT.jar --mail.message.to=alikatkar@hotmail.com
- 
+
+With all possible configurations. (To be able to run remove end of lines)
+
+    java -jar target/compliance-report-0.0.1-SNAPSHOT.jar 
+            --sheet.source = 1uWiPtk60-hV-Ff7fF3m1vv-4UwWFU4D1CCoGLXElhzU
+            --sheet.range = Index 
+            --template.folder=file:/Users/alikatkar/upload/template/ 
+            --mail.message.template=bootcampTemplate
+            --mail.message.to=alikatkar@gmail.com, alikatkar@hotmail.com
+            --mail.message.cc=ali.katkar@aurea.com
+            --mail.message.subject=Bootcamp Compliance Report
+            --mail.message.attachments=/Users/alikatkar/file1.txt,/Users/alikatkar/file2.txt
+            --mail.message.individually = false
+            --schedule.cron='0 0 23 ? * MON,FRI' 
+where assumes that following files exist in the file system
+ - /Users/alikatkar/upload/template/bootcampTemplate.html 
+ - /Users/alikatkar/file1.txt
+ - /Users/alikatkar/file2.txt
+          
 ## Setting time to send
 Scheduling has been done quartz cron scheduler. So if you provide a valid cron expression 
 email reports will be sent periodically according to cron expression. If cron expression is provided but invalid, application will stop without sending report.
