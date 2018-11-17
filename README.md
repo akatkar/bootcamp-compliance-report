@@ -13,7 +13,13 @@ Values is a List of Map object
 
 Mail template should be prepared by using these objects. 
 If the report will be sent as individually according to contents of the sheet, 
-sheet must have an email column and template must be using value object.   
+sheet must have an email column and its header must contain <b>email</b> as a key value. 
+Since individual mails sent for each row, template must be using value object instead of values.
+
+Example sheets
+ -  For Bootcamp report: https://docs.google.com/spreadsheets/d/1uWiPtk60-hV-Ff7fF3m1vv-4UwWFU4D1CCoGLXElhzU/edit#gid=0
+ -  For Students report: https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit#gid=0
+ -  For individual mails: https://docs.google.com/spreadsheets/d/1xjkquoEFKbrFz87CEhbYRiu7XWD8unbZVpCbjGMTNzU/edit#gid=0   
 
 ## sheet configuration
  - sheet.source = 1uWiPtk60-hV-Ff7fF3m1vv-4UwWFU4D1CCoGLXElhzU
@@ -105,4 +111,8 @@ The first time you run the sample, it will prompt you to authorize access:
     c. The sample will proceed automatically, and you may close the window/tab.
 Authorization information is stored on the file system, so subsequent executions will not prompt for authorization.
 
-> for more information: https://developers.google.com/sheets/api/quickstart/java    
+> for more information: https://developers.google.com/sheets/api/quickstart/java  
+
+## Video Demonstration
+https://drive.google.com/file/d/10XShjEYxAxzwZAFKzFiXa7-I5-7Mfd8V/view
+  
