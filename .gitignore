@@ -1,5 +1,13 @@
-/target/
-!.mvn/wrapper/maven-wrapper.jar
+HELP.md
+target/
+.mvn
+mvnw*
+/tokens/
+!**/src/main/**
+!**/src/test/**
+
+# Credentials
+tokens/
 
 ### STS ###
 .apt_generated
@@ -23,3 +31,11 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+
+# Mac OS Files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Thumbnails
+._*
