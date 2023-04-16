@@ -14,6 +14,7 @@ import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +26,13 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class SpreadSheetReaderService {
 
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final String TOKENS_DIRECTORY_PATH = "tokens";
 
-    @Autowired
-    private SheetConfig sheetConfig;
+    private final SheetConfig sheetConfig;
 
     /**
      * Global instance of the scopes.
@@ -62,7 +63,7 @@ public class SpreadSheetReaderService {
     }
 
 
-    public List<List<Object>> readData() throws IOException, GeneralSecurityException {
+    List<List<Object>> readData() throws IOException, GeneralSecurityException {
 
         // Build a new authorized API client service.
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();

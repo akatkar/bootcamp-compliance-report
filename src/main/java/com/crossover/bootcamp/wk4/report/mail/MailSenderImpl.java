@@ -2,33 +2,31 @@ package com.crossover.bootcamp.wk4.report.mail;
 
 import com.crossover.bootcamp.wk4.report.config.MailMessageConfig;
 import com.crossover.bootcamp.wk4.report.model.SheetData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 class MailSenderImpl implements MailSender{
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MailSenderImpl.class);
+    private final JavaMailSender mailSender;
 
-    @Autowired
-    private JavaMailSender mailSender;
+    private final MailContentBuilder mailBuilder;
 
-    @Autowired
-    private MailContentBuilder mailBuilder;
-
-    @Autowired
-    private MailMessageConfig mailMessageConfig;
+    private final MailMessageConfig mailMessageConfig;
 
     @Override
     public void sendMail(SheetData data) {
@@ -50,9 +48,7 @@ class MailSenderImpl implements MailSender{
         data.getValues()
                 .stream()
                 .parallel()
-                .forEach(value-> {
-                    sendMail(value.get(emailHeader), data.getHeaders(), value);
-                });
+                .forEach(value -> sendMail(value.get(emailHeader), data.getHeaders(), value));
     }
 
     private void sendMail(List<String> headers, List<Map<String, String>> values){
@@ -73,7 +69,7 @@ class MailSenderImpl implements MailSender{
             messageHelper.setText(content, true);
         };
         mailSender.send(messagePreparator);
-        LOGGER.info("{} sent with subject {} to {}",
+        log.info("{} sent with subject {} to {}",
                 mailMessageConfig.getTemplate(),
                 mailMessageConfig.getSubject(),
                 mailMessageConfig.getTo());
@@ -97,23 +93,24 @@ class MailSenderImpl implements MailSender{
             messageHelper.setText(content, true);
         };
         mailSender.send(messagePreparator);
-        LOGGER.info("{} sent with subject {} to {}",
+        log.info("{} sent with subject {} to {}",
                 mailMessageConfig.getTemplate(),
                 mailMessageConfig.getSubject(),
                 toEmail);
     }
 
     private void addAttachments(MimeMessageHelper messageHelper, List<String> files) {
-
         files.stream()
                 .map(Paths::get)
                 .filter(Files::exists)
-                .forEach(path -> {
-                    try{
-                        messageHelper.addAttachment(path.getFileName().toString(), path.toFile());
-                    }catch (Exception e) {
-                        LOGGER.error("{} cannot be attached", path, e);
-                    }
-                });
+                .forEach(path -> addAttachment(messageHelper, path));
+    }
+
+    private void addAttachment(MimeMessageHelper messageHelper, Path path) {
+        try{
+            messageHelper.addAttachment(path.getFileName().toString(), path.toFile());
+        }catch (MessagingException e) {
+            log.error("{} cannot be attached", path, e);
+        }
     }
 }

@@ -2,24 +2,21 @@ package com.crossover.bootcamp.wk4.report.service;
 
 import com.crossover.bootcamp.wk4.report.mail.MailSender;
 import com.crossover.bootcamp.wk4.report.model.SheetData;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class ReportBuilderService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ReportBuilderService.class);
+    private final SpreadSheetReaderService spreadSheetReaderService;
 
-    @Autowired
-    private SpreadSheetReaderService spreadSheetReaderService;
-
-    @Autowired
-    private MailSender mailSender;
+    private final MailSender mailSender;
 
     private SheetData read() throws IOException, GeneralSecurityException {
         return new SheetData(spreadSheetReaderService.readData());
@@ -30,7 +27,7 @@ public class ReportBuilderService {
             SheetData sheetData = read();
             mailSender.sendMail(sheetData);
         }catch (Exception e){
-            LOGGER.error("Error on building report", e);
+            log.error("Error on building report", e);
         }
     }
 }

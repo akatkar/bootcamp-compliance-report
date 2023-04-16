@@ -1,10 +1,13 @@
 package com.crossover.bootcamp.wk4.report.model;
 
+import lombok.Getter;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+@Getter
 public class SheetData {
 
     private List<String> headers;
@@ -32,13 +35,5 @@ public class SheetData {
             results.put(headers.get(i), values.get(i).toString());
         }
         return results;
-    }
-
-    public List<String> getHeaders() {
-        return headers;
-    }
-
-    public List<Map<String, String>> getValues() {
-        return values;
     }
 }

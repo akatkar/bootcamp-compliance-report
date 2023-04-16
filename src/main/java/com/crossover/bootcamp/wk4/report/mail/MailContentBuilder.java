@@ -1,6 +1,5 @@
 package com.crossover.bootcamp.wk4.report.mail;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
@@ -19,14 +18,14 @@ public class MailContentBuilder {
         this.templateEngine = templateEngine;
     }
 
-    public String build(String template, List<String> headers, List<Map<String,String>> values) {
+    String build(String template, List<String> headers, List<Map<String,String>> values) {
         Context context = new Context();
         context.setVariable("headers", headers);
         context.setVariable("values", values);
         return templateEngine.process(template, context);
     }
 
-    public String build(String template, List<String> headers, Map<String,String> value) {
+    String build(String template, List<String> headers, Map<String,String> value) {
         Context context = new Context();
         context.setVariable("headers", headers);
         context.setVariable("value", value);
