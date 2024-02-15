@@ -1,26 +1,33 @@
 package com.crossover.bootcamp.wk4.report.schedule;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.quartz.*;
+import java.util.UUID;
+
+import org.quartz.CronExpression;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.Trigger;
+import org.quartz.TriggerBuilder;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.util.UUID;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class ScheduledTasks {
+public class JobScheduler {
 
     @Value("${schedule.cron}")
     private String timeToSend;
 
-    private Scheduler scheduler;
+    private final Scheduler scheduler;
 
     private JobDetail buildJobDetail() {
-
         return JobBuilder.newJob(MailReportJob.class)
                 .withIdentity(UUID.randomUUID().toString(), "email-jobs")
                 .withDescription("Send Email Report")
@@ -37,11 +44,11 @@ public class ScheduledTasks {
     }
 
     public boolean schedule() {
-        if (!StringUtils.isEmpty(timeToSend)) {
+        if (StringUtils.hasText(timeToSend)) {
 
             if(!CronExpression.isValidExpression(timeToSend)){
                 log.error("{} is not valid cron expression.", timeToSend);
-                System.exit(1);
+                throw new IllegalArgumentException("invalid cron:'" + timeToSend + "'");
             }
 
             try {
@@ -50,7 +57,7 @@ public class ScheduledTasks {
                 scheduler.scheduleJob(jobDetail, trigger);
                 log.info("Job scheduled as {}", timeToSend);
                 return true;
-            }catch (Exception e){
+            } catch (SchedulerException e){
                 log.error("Could not be scheduled for {}", timeToSend, e);
             }
         }

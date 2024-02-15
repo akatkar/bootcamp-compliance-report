@@ -1,13 +1,14 @@
 package com.crossover.bootcamp.wk4.report.config;
 
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.templatemode.TemplateMode;
-
-import java.nio.charset.StandardCharsets;
 
 @Configuration
 public class ThymeleafConfig {
@@ -16,7 +17,7 @@ public class ThymeleafConfig {
     private String templateFolder;
 
     @Bean
-    public SpringTemplateEngine springTemplateEngine() {
+    public TemplateEngine springTemplateEngine() {
         SpringTemplateEngine templateEngine = new SpringTemplateEngine();
         templateEngine.addTemplateResolver(htmlTemplateResolver());
         return templateEngine;

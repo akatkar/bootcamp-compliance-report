@@ -1,3 +1,17 @@
+## New Changes
+### Mailhog
+Added Mailhog to capture and test emails during development
+- start mailhog as running `docker-compose -f docker/docker-compose.yaml up -d`
+- open Mailhog on browser as http://localhost:8025/#
+- to stop mailhog `docker-compose -f docker/docker-compose.yaml down`
+
+### Project changes
+- moved to gradle. Build project using `./gradlew clean build`
+- upgrade to Java 17 
+- added checkstyle
+- added unit tests
+- added reading excel files (.xlsx) (use simplemail and bootcamp profile to test)
+
 # bootcamp-email-reporting-tool
 This tool has been developed for bootcamp hackaton  
 

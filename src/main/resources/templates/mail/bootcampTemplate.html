@@ -55,21 +55,21 @@
         <td bgcolor="#eaeaea" style="padding: 10px 10px 10px 10px;">
             <table align="center" border="2" cellpadding="5" cellspacing="0" width="900" style="border-collapse: collapse;">
                 <tr bgcolor="#a9a9a9">
-                    <th th:text="${headers.get(1)}">IC Name</th>
-                    <th th:text="${headers.get(4)}">7 Hrs per day</th>
-                    <th th:text="${headers.get(5)}">Deep Work Blocks</th>
-                    <th th:text="${headers.get(6)}">Dev Time >70%</th>
-                    <th th:text="${headers.get(7)}">Daily CiC</th>
-                    <th th:text="${headers.get(8)}">Intensity - Focus 90%</th>
+                    <th th:text="${headers.get(0)}">IC Name</th>
+                    <th th:text="${headers.get(1)}">7 Hrs per day</th>
+                    <th th:text="${headers.get(2)}">Deep Work Blocks</th>
+                    <th th:text="${headers.get(3)}">Dev Time >70%</th>
+                    <th th:text="${headers.get(4)}">Daily CiC</th>
+                    <th th:text="${headers.get(5)}">Intensity - Focus 90%</th>
                 </tr>
                 <tr align="center" th:each="ic : ${values}">
 
-                    <td th:text="${ic.get(headers.get(1))}" bgcolor="#a9a9a9">Ali Katkar</td>
+                    <td th:text="${ic.get(headers.get(0))}" bgcolor="#a9a9a9">Ali Katkar</td>
+                    <td th:text="${ic.get(headers.get(1))}" th:bgcolor="${ic.get(headers.get(1)) eq 'Yes'} ? 'green' : 'red'">Yes</td>
+                    <td th:text="${ic.get(headers.get(2))}" th:bgcolor="${ic.get(headers.get(2)) eq 'Yes'} ? 'green' : 'red'">No</td>
+                    <td th:text="${ic.get(headers.get(3))}" th:bgcolor="${ic.get(headers.get(3)) eq 'Yes'} ? 'green' : 'red'">No</td>
                     <td th:text="${ic.get(headers.get(4))}" th:bgcolor="${ic.get(headers.get(4)) eq 'Yes'} ? 'green' : 'red'">Yes</td>
                     <td th:text="${ic.get(headers.get(5))}" th:bgcolor="${ic.get(headers.get(5)) eq 'Yes'} ? 'green' : 'red'">No</td>
-                    <td th:text="${ic.get(headers.get(6))}" th:bgcolor="${ic.get(headers.get(6)) eq 'Yes'} ? 'green' : 'red'">No</td>
-                    <td th:text="${ic.get(headers.get(7))}" th:bgcolor="${ic.get(headers.get(7)) eq 'Yes'} ? 'green' : 'red'">Yes</td>
-                    <td th:text="${ic.get(headers.get(8))}" th:bgcolor="${ic.get(headers.get(8)) eq 'Yes'} ? 'green' : 'red'">No</td>
                 </tr>
             </table>
         </td>

@@ -1,15 +1,5 @@
 package com.crossover.bootcamp.wk4.report.mail;
 
-import com.crossover.bootcamp.wk4.report.config.MailMessageConfig;
-import com.crossover.bootcamp.wk4.report.model.SheetData;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.stereotype.Service;
-
-import javax.mail.MessagingException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -17,10 +7,22 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.MessagingException;
+
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.stereotype.Service;
+
+import com.crossover.bootcamp.wk4.report.config.MailMessageConfig;
+import com.crossover.bootcamp.wk4.report.model.SheetData;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
 @Service
 @Slf4j
 @RequiredArgsConstructor
-class MailSenderImpl implements MailSender{
+class MailSenderImpl implements MailSender {
 
     private final JavaMailSender mailSender;
 
@@ -30,8 +32,7 @@ class MailSenderImpl implements MailSender{
 
     @Override
     public void sendMail(SheetData data) {
-
-        if(mailMessageConfig.isIndividually()){
+        if(mailMessageConfig.isIndividually()) {
             sendMailIndividually(data);
         } else {
             sendMail(data.getHeaders(), data.getValues());
@@ -43,12 +44,12 @@ class MailSenderImpl implements MailSender{
         String emailHeader = data.getHeaders().stream()
                 .filter(s -> s.toLowerCase().contains("email"))
                 .findFirst()
-                .orElseGet(() -> {throw new EmailNotFoundException();});
+                .orElseThrow(EmailNotFoundException::new);
 
         data.getValues()
                 .stream()
                 .parallel()
-                .forEach(value -> sendMail(value.get(emailHeader), data.getHeaders(), value));
+                .forEach(value -> sendMail(data.getHeaders(), value, value.get(emailHeader)));
     }
 
     private void sendMail(List<String> headers, List<Map<String, String>> values){
@@ -75,9 +76,16 @@ class MailSenderImpl implements MailSender{
                 mailMessageConfig.getTo());
     }
 
-    private void sendMail(String toEmail, List<String> headers, Map<String, String> value){
+    private void sendMail(List<String> headers, Map<String, String> value, String... toEmail){
+        mailSender.send(prepareMimeMessage(headers, value, toEmail));
+        log.info("{} sent with subject {} to {}",
+                mailMessageConfig.getTemplate(),
+                mailMessageConfig.getSubject(),
+                toEmail);
+    }
 
-        MimeMessagePreparator messagePreparator = mimeMessage -> {
+    private MimeMessagePreparator prepareMimeMessage(List<String> headers, Map<String, String> value, String... toEmail) {
+        return mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage,
                     MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED,
                     StandardCharsets.UTF_8.name());
@@ -92,11 +100,6 @@ class MailSenderImpl implements MailSender{
             String content = mailBuilder.build(mailMessageConfig.getTemplate(), headers, value);
             messageHelper.setText(content, true);
         };
-        mailSender.send(messagePreparator);
-        log.info("{} sent with subject {} to {}",
-                mailMessageConfig.getTemplate(),
-                mailMessageConfig.getSubject(),
-                toEmail);
     }
 
     private void addAttachments(MimeMessageHelper messageHelper, List<String> files) {

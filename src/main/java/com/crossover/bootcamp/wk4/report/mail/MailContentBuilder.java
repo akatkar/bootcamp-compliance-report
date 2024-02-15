@@ -1,22 +1,19 @@
 package com.crossover.bootcamp.wk4.report.mail;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
-import java.util.List;
-import java.util.Map;
+import lombok.RequiredArgsConstructor;
 
 @Component
+@RequiredArgsConstructor
 public class MailContentBuilder {
 
     private final TemplateEngine templateEngine;
-
-    @Autowired
-    public MailContentBuilder(TemplateEngine templateEngine) {
-        this.templateEngine = templateEngine;
-    }
 
     String build(String template, List<String> headers, List<Map<String,String>> values) {
         Context context = new Context();

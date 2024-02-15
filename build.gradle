@@ -1,0 +1,45 @@
+plugins {
+    id "java"
+    id "checkstyle"
+    id "org.springframework.boot" version "${springBootVersion}"
+    id "io.spring.dependency-management" version "${springDepMgmtVersion}"
+}
+
+group = 'com.crossover'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    sourceCompatibility = '17'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+    implementation "org.springframework.boot:spring-boot-starter-mail"
+    implementation "org.springframework.boot:spring-boot-starter-quartz"
+
+    implementation "nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:${thymeleafLayoutDialectVersion}"
+
+    implementation "com.google.api-client:google-api-client:${googleApiClientVersion}"
+    implementation "com.google.oauth-client:google-oauth-client:${googleOauthClientVersion}"
+    implementation "com.google.oauth-client:google-oauth-client-jetty:${googleOauthClientVersion}"
+    implementation "com.google.apis:google-api-services-sheets:${googleApiServicesSheetsVersion}"
+
+    implementation "org.dhatim:fastexcel:${fastExcelVersion}"
+    implementation "org.dhatim:fastexcel-reader:${fastExcelVersion}"
+    implementation 'org.projectlombok:lombok:1.18.28'
+
+
+    annotationProcessor "org.projectlombok:lombok"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

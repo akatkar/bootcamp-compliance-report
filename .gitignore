@@ -1,6 +1,6 @@
 HELP.md
 target/
-.mvn
+.gradle
 mvnw*
 /tokens/
 !**/src/main/**
